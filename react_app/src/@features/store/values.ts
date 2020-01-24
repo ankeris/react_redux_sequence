@@ -11,6 +11,7 @@ const initialState: State = {
     facilityValues: false,
     exposureValues: false,
     isLoading: false,
+    errorMessage: ""
 };
 
 export const VALUES_ACTION_TYPES: ActionTypes = {
@@ -76,6 +77,7 @@ export const getPersonValues: Epic = (action$) => action$.pipe(
             flatMap(({data}) => of(
                 {type: VALUES_ACTION_TYPES.GET_PERSON_SUCCESS, payload: data},
             )),
+            catchError(() => of({type: VALUES_ACTION_TYPES.GET_PERSON_FAIL, payload: "error retrieving person values"})),
         )
     }),
 )
@@ -87,6 +89,7 @@ export const getFacilityValues: Epic = (action$) => action$.pipe(
             flatMap(({data}) => of(
                 {type: VALUES_ACTION_TYPES.GET_FACILITY_SUCCESS, payload: data},
             )),
+            catchError(() => of({type: VALUES_ACTION_TYPES.GET_FACILITY_FAIL, payload: "error retrieving facility values"})),
         )
     }),
 )
@@ -98,6 +101,7 @@ export const getExposureValues: Epic = (action$) => action$.pipe(
             flatMap(({data}) => of(
                     {type: VALUES_ACTION_TYPES.GET_EXPOSURE_SUCCESS, payload: data},
             )),
+            catchError(() => of({type: VALUES_ACTION_TYPES.GET_EXPOSURE_FAIL, payload: "error retrieving exposure values"})),
         )
     }),
 )

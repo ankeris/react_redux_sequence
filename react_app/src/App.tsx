@@ -6,6 +6,7 @@ import { valuesActions } from './@features/store/values';
 
 interface IProps extends DispatchProp {
   isLoading: boolean,
+  serverErrorMessage: string,
 }
 
 const App: FunctionComponent<IProps> = (props) => {
@@ -21,12 +22,14 @@ const App: FunctionComponent<IProps> = (props) => {
       <p>Get your alpha character calculation</p>
       <input type="text" value={inputValue} onChange={(ev) => setInputValue(ev.target.value)}/>
       <button onClick={onSubmit}>Proceed</button>
+      {!!props.serverErrorMessage.length && <h4 className="error error--warning">{props.serverErrorMessage}</h4>}
     </>
   );
 }
 
 const mapStateToProps = (state: any) => ({
   isLoading: state.values.isLoading,
+  serverErrorMessage: state.values.errorMessage,
 })
 
 const AppContainer = connect(mapStateToProps)(App);
