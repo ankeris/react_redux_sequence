@@ -76,6 +76,7 @@ export const getPersonValues: Epic = (action$) => action$.pipe(
         return valuesService.getPerson(payload || '').pipe(
             flatMap(({data}) => of(
                 {type: VALUES_ACTION_TYPES.GET_PERSON_SUCCESS, payload: data},
+                {type: VALUES_ACTION_TYPES.GET_FACILITY}
             )),
             catchError(() => of({type: VALUES_ACTION_TYPES.GET_PERSON_FAIL, payload: "error retrieving person values"})),
         )
@@ -88,6 +89,7 @@ export const getFacilityValues: Epic = (action$) => action$.pipe(
         return valuesService.getFacility(11111).pipe(
             flatMap(({data}) => of(
                 {type: VALUES_ACTION_TYPES.GET_FACILITY_SUCCESS, payload: data},
+                {type: VALUES_ACTION_TYPES.GET_EXPOSURE}
             )),
             catchError(() => of({type: VALUES_ACTION_TYPES.GET_FACILITY_FAIL, payload: "error retrieving facility values"})),
         )
