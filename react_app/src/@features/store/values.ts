@@ -1,5 +1,8 @@
 import { ActionTypes, Action, Actions, State } from '../types/store.interface';
 import ValuesService from '../services/values.service';
+import { ofType, Epic, combineEpics } from 'redux-observable';
+import { mergeMap, catchError, flatMap } from 'rxjs/operators';
+import { of } from 'rxjs';
 
 const initialState: State = {
     personValues: null,
@@ -32,6 +35,12 @@ export function valuesReducer(state: State = initialState, {type, payload}: Acti
                 ...state,
                 isLoading: true
             }
+        case VALUES_ACTION_TYPES.GET_PERSON_SUCCESS:
+            return {
+                ...state,
+                personValues: payload,
+                isLoading: false
+            }
         case VALUES_ACTION_TYPES.GET_PERSON_FAIL:
         case VALUES_ACTION_TYPES.GET_FACILITY_FAIL:
         case VALUES_ACTION_TYPES.GET_EXPOSURE_FAIL:
@@ -44,5 +53,20 @@ export function valuesReducer(state: State = initialState, {type, payload}: Acti
             return state
     }
 }
+
+export const getPersonValues: Epic = (action$) => action$.pipe(
+    ofType(VALUES_ACTION_TYPES.GET_PERSON),
+    flatMap(({payload}) => {
+        return valuesService.getPerson(payload || '').pipe(
+            flatMap(({data}) => of(
+                {type: VALUES_ACTION_TYPES.GET_PERSON_SUCCESS, payload: data},
+            )),
+        )
+    }),
+)
+
+export const VALUES_EPICS = combineEpics(
+    getPersonValues,
+);
 
 const valuesService = new ValuesService();
