@@ -1,0 +1,26 @@
+body {
+    background-color: black;
+    color: white;
+    box-sizing: border-box;
+    font-family: "Lucida Sans Unicode", "Lucida Grande", sans-serif;
+}
+
+.app-box {
+    max-width: 400px;
+    margin: 0 auto;
+    text-align: center;
+    border: 3px solid white;
+    border-radius: 10px;
+    min-height: 90vh;
+}
+
+.input {
+    padding: 15px;
+    border: 1px solid #ccc;
+    border-radius: 3px;
+    font-size: 2em;
+    width: 90%;
+    box-sizing: border-box;
+    font-family: montserrat;
+    color: #2C3E50;
+}

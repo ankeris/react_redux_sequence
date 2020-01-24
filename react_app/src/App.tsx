@@ -1,11 +1,14 @@
 import React, { useState, FunctionComponent, useEffect } from "react";
 import {connect, DispatchProp} from 'react-redux';
-import "./style.scss";
 // actions
 import { valuesActions } from './@features/store/values';
-import { Person, Facility, Exposure } from '../../shared_types/types';
+import { Facility, Exposure } from '../../shared_types/types';
 import useOverlay from "./@features/hooks/overlay.hook";
 import Overlay from "./components/Overlay";
+// css
+import "./@features/sass/style.scss";
+import "./@features/sass/button.scss";
+
 
 interface IProps extends DispatchProp {
   isLoading: boolean,
@@ -25,6 +28,7 @@ const App: FunctionComponent<IProps> = (props) => {
     else return ''
   }
 
+  // When exposure (final) values comes, this hook will fire
   useEffect(() => {
     if (!props.exposureValues) return;
     setOverlayTitle('Overlay')
@@ -38,19 +42,20 @@ const App: FunctionComponent<IProps> = (props) => {
     setErrMsg(errMsg);
     // if there's error message, it's invalid
     const isValid = !errMsg.length;
-    
     if (!isValid) return;
-      props.dispatch(valuesActions.getPersonValues<string>(inputValue));
+    props.dispatch(valuesActions.getPersonValues<string>(inputValue));
   };
 
   return (
-    <>
-      <h1>Alpha number calc!</h1>
-      <p>Get your alpha character calculation</p>
-      <input type="text" value={inputValue} onChange={(ev) => {
+    <section className="app-box">
+      <h1>Alpha character to number generator!</h1>
+      <p>Insert your alpha character:</p>
+      <input className="input" type="text" value={inputValue} onChange={(ev) => {
         setErrMsg(getValidationMessage(ev.target.value)); setInputValue(ev.target.value)
       }}/>
-      <button disabled={!!errMsg.length} onClick={onSubmit}>Proceed</button>
+
+      <button className="button button--success" disabled={!!errMsg.length} onClick={onSubmit}>Proceed</button>
+
       {props.isLoading && <h5>Loading</h5>}
       {!!props.serverErrorMessage.length && <h4 className="error error--warning">{props.serverErrorMessage}</h4>}
       {!!errMsg.length && <h1>{errMsg}</h1>}
@@ -62,7 +67,7 @@ const App: FunctionComponent<IProps> = (props) => {
         hide={toggleOverlay}
       />
 
-    </>
+    </section>
   );
 }
 
