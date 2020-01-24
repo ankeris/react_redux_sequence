@@ -5,11 +5,11 @@
         margin: 5px 0;
         &--warning {
             color: color(warning);
-            background-color: darken(color(warning), 60%);
+            background-color: darken(color(warning), 50%);
         }
         &--danger {
             color: color(danger);
-            background-color: darken(color(danger), 60%);
+            background-color: darken(color(danger), 50%);
         }
     }
 }

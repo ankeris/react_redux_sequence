@@ -24,7 +24,7 @@ const App: FunctionComponent<IProps> = (props) => {
   const {isShowing, toggleOverlay, setOverlayMessage, overlayMessage, setOverlayTitle, overlayTitle} = useOverlay();
   
   const getValidationMessage = (value: string): string => {
-    if (value.toString().length < 1 || value.toString().length > 10) return 'Number should be up to 10 characters';
+    if (value.toString().length < 1 || value.toString().length > 10) return 'Characters should be up to 10 length';
     if (!/^[a-zA-Z]+$/.test(value)) return 'Should only contain letters';  
     else return ''
   }
