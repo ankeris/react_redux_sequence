@@ -1,0 +1,15 @@
+@import 'variables';
+
+.error-box {
+    &__message {
+        margin: 5px 0;
+        &--warning {
+            color: color(warning);
+            background-color: darken(color(warning), 60%);
+        }
+        &--danger {
+            color: color(danger);
+            background-color: darken(color(danger), 60%);
+        }
+    }
+}

@@ -1,5 +1,7 @@
 import React, { FunctionComponent } from "react";
 import {createPortal} from "react-dom"
+//css
+import '../@features/sass/overlay.scss';
 
 type Props = {
     title: string,
@@ -9,13 +11,15 @@ type Props = {
 }
 
 const Overlay: FunctionComponent<Props> = ({title, message, isShowing, hide}) => 
-    isShowing ? createPortal(<section className="overlay">
-        <div className="overlay-box">
-            <h2>{title}</h2>
-            <p>{message}</p>
-            <button onClick={hide}>x</button>
-        </div>
-    </section>, document.body) :
+    isShowing ? createPortal(
+        <section className="overlay">
+                <div className="overlay-shadow"></div>
+                <div className="overlay-modal">
+                    <h2>{title}</h2>
+                    <p>{message}</p>
+                    <button className="button button--success" onClick={hide}>Ok</button>
+                </div>
+        </section>, document.body) :
     null
 
 export default Overlay

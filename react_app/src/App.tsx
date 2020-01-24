@@ -8,6 +8,7 @@ import Overlay from "./components/Overlay";
 // css
 import "./@features/sass/style.scss";
 import "./@features/sass/button.scss";
+import "./@features/sass/errors.scss";
 
 
 interface IProps extends DispatchProp {
@@ -31,7 +32,7 @@ const App: FunctionComponent<IProps> = (props) => {
   // When exposure (final) values comes, this hook will fire
   useEffect(() => {
     if (!props.exposureValues) return;
-    setOverlayTitle('Overlay')
+    setOverlayTitle('Success!')
     setOverlayMessage(`The final value is: ${props.facilityValues.val3 * props.facilityValues.val4}`)
     // only open overlay when it's not open yet.
     if(!isShowing) toggleOverlay()
@@ -57,8 +58,8 @@ const App: FunctionComponent<IProps> = (props) => {
       <button className="button button--success" disabled={!!errMsg.length} onClick={onSubmit}>Proceed</button>
 
       {props.isLoading && <h5>Loading</h5>}
-      {!!props.serverErrorMessage.length && <h4 className="error error--warning">{props.serverErrorMessage}</h4>}
-      {!!errMsg.length && <h1>{errMsg}</h1>}
+      {!!props.serverErrorMessage.length && <h1 className="error-box__message error-box__message--danger">{props.serverErrorMessage}</h1>}
+      {!!errMsg.length && <h1 className="error-box__message error-box__message--warning">{errMsg}</h1>}
 
       <Overlay
         title={overlayTitle}

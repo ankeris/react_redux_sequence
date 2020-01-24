@@ -37,6 +37,7 @@ export function valuesReducer(state: State = initialState, {type, payload}: Acti
         case VALUES_ACTION_TYPES.GET_EXPOSURE:
             return {
                 ...state,
+                errorMessage: "",
                 isLoading: true
             }
         case VALUES_ACTION_TYPES.GET_PERSON_SUCCESS:
@@ -100,13 +101,9 @@ export const getExposureValues: Epic = (action$, state) => action$.pipe(
     ofType(VALUES_ACTION_TYPES.GET_EXPOSURE),
     flatMap(() => {
         return valuesService.getExposure(state.value.values.personValues.val2).pipe(
-            flatMap(({data}) => {
-                console.log(data);
-                
-                return of(
-                        {type: VALUES_ACTION_TYPES.GET_EXPOSURE_SUCCESS, payload: data},
-                )
-            }),
+            flatMap(({data}) => of(
+                {type: VALUES_ACTION_TYPES.GET_EXPOSURE_SUCCESS, payload: data},
+            )),
             catchError(() => of({type: VALUES_ACTION_TYPES.GET_EXPOSURE_FAIL, payload: "error retrieving exposure values"})),
         )
     }),
