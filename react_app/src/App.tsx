@@ -11,6 +11,13 @@ interface IProps extends DispatchProp {
 
 const App: FunctionComponent<IProps> = (props) => {
   const [inputValue, setInputValue] = useState<string>('');
+  const [errMsg, setErrMsg] = useState<string>('');
+
+  const getValidationMessage = (value: string): string => {
+    if (value.toString().length < 1 || value.toString().length > 10) return 'Number should be up to 10 characters';
+    if (!/^[a-zA-Z]+$/.test(value)) return 'Should only contain letters';  
+    else return ''
+  }
 
   const onSubmit = () => {
       props.dispatch(valuesActions.getPersonValues(inputValue));
@@ -20,9 +27,13 @@ const App: FunctionComponent<IProps> = (props) => {
     <>
       <h1>Alpha number calc!</h1>
       <p>Get your alpha character calculation</p>
-      <input type="text" value={inputValue} onChange={(ev) => setInputValue(ev.target.value)}/>
-      <button onClick={onSubmit}>Proceed</button>
+      <input type="text" value={inputValue} onChange={(ev) => {
+        setErrMsg(getValidationMessage(ev.target.value)); setInputValue(ev.target.value)
+      }}/>
+      <button disabled={!!errMsg.length} onClick={onSubmit}>Proceed</button>
+      {props.isLoading && <h5>Loading</h5>}
       {!!props.serverErrorMessage.length && <h4 className="error error--warning">{props.serverErrorMessage}</h4>}
+      {!!errMsg.length && <h1>{errMsg}</h1>}
     </>
   );
 }
