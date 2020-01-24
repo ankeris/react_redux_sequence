@@ -4,7 +4,11 @@ import "./style.scss";
 // actions
 import { valuesActions } from './@features/store/values';
 
-const App: FunctionComponent<any> = (props) => {
+interface IProps extends DispatchProp {
+  isLoading: boolean,
+}
+
+const App: FunctionComponent<IProps> = (props) => {
   const [inputValue, setInputValue] = useState<string>('');
 
   const onSubmit = () => {
