@@ -1,1 +1,1 @@
-## React + Redux app that provides a solution of sequential GET requests in Redux
+## React + Redux + TS + RXJS
