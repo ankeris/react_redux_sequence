@@ -10,6 +10,7 @@ const initialState: State = {
     personValues: null,
     facilityValues: false,
     exposureValues: false,
+    isLoading: false,
 };
 
 export const VALUES_ACTION_TYPES: ActionTypes = {
