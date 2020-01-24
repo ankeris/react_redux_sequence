@@ -1,4 +1,5 @@
 import { ActionTypes, Action, Actions, State } from '../types/store.interface';
+import ValuesService from '../services/values.service';
 
 const initialState: State = {
     personValues: null,
@@ -43,3 +44,5 @@ export function valuesReducer(state: State = initialState, {type, payload}: Acti
             return state
     }
 }
+
+const valuesService = new ValuesService();
