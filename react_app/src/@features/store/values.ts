@@ -83,10 +83,10 @@ export const getPersonValues: Epic = (action$) => action$.pipe(
     }),
 )
 
-export const getFacilityValues: Epic = (action$) => action$.pipe(
+export const getFacilityValues: Epic = (action$, state) => action$.pipe(
     ofType(VALUES_ACTION_TYPES.GET_FACILITY),
     flatMap(() => {
-        return valuesService.getFacility(11111).pipe(
+        return valuesService.getFacility(state.value.values.personValues.val1).pipe(
             flatMap(({data}) => of(
                 {type: VALUES_ACTION_TYPES.GET_FACILITY_SUCCESS, payload: data},
                 {type: VALUES_ACTION_TYPES.GET_EXPOSURE}
@@ -96,13 +96,17 @@ export const getFacilityValues: Epic = (action$) => action$.pipe(
     }),
 )
 
-export const getExposureValues: Epic = (action$) => action$.pipe(
+export const getExposureValues: Epic = (action$, state) => action$.pipe(
     ofType(VALUES_ACTION_TYPES.GET_EXPOSURE),
     flatMap(() => {
-        return valuesService.getExposure(11111).pipe(
-            flatMap(({data}) => of(
-                    {type: VALUES_ACTION_TYPES.GET_EXPOSURE_SUCCESS, payload: data},
-            )),
+        return valuesService.getExposure(state.value.values.personValues.val2).pipe(
+            flatMap(({data}) => {
+                console.log(data);
+                
+                return of(
+                        {type: VALUES_ACTION_TYPES.GET_EXPOSURE_SUCCESS, payload: data},
+                )
+            }),
             catchError(() => of({type: VALUES_ACTION_TYPES.GET_EXPOSURE_FAIL, payload: "error retrieving exposure values"})),
         )
     }),
