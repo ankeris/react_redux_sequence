@@ -4,6 +4,8 @@ import { ofType, Epic, combineEpics } from 'redux-observable';
 import { mergeMap, catchError, flatMap } from 'rxjs/operators';
 import { of } from 'rxjs';
 
+const valuesService = new ValuesService();
+
 const initialState: State = {
     personValues: null,
     facilityValues: false,
@@ -69,4 +71,3 @@ export const VALUES_EPICS = combineEpics(
     getPersonValues,
 );
 
-const valuesService = new ValuesService();
