@@ -43,6 +43,18 @@ export function valuesReducer(state: State = initialState, {type, payload}: Acti
                 personValues: payload,
                 isLoading: false
             }
+        case VALUES_ACTION_TYPES.GET_FACILITY_SUCCESS:
+            return {
+                ...state,
+                facilityValues: payload,
+                isLoading: false
+            }
+        case VALUES_ACTION_TYPES.GET_EXPOSURE_SUCCESS:
+            return {
+                ...state,
+                exposureValues: payload,
+                isLoading: false
+            }
         case VALUES_ACTION_TYPES.GET_PERSON_FAIL:
         case VALUES_ACTION_TYPES.GET_FACILITY_FAIL:
         case VALUES_ACTION_TYPES.GET_EXPOSURE_FAIL:
@@ -67,7 +79,30 @@ export const getPersonValues: Epic = (action$) => action$.pipe(
     }),
 )
 
+export const getFacilityValues: Epic = (action$) => action$.pipe(
+    ofType(VALUES_ACTION_TYPES.GET_FACILITY),
+    flatMap(() => {
+        return valuesService.getFacility(11111).pipe(
+            flatMap(({data}) => of(
+                {type: VALUES_ACTION_TYPES.GET_FACILITY_SUCCESS, payload: data},
+            )),
+        )
+    }),
+)
+
+export const getExposureValues: Epic = (action$) => action$.pipe(
+    ofType(VALUES_ACTION_TYPES.GET_EXPOSURE),
+    flatMap(() => {
+        return valuesService.getExposure(11111).pipe(
+            flatMap(({data}) => of(
+                    {type: VALUES_ACTION_TYPES.GET_EXPOSURE_SUCCESS, payload: data},
+            )),
+        )
+    }),
+)
+
 export const VALUES_EPICS = combineEpics(
     getPersonValues,
+    getFacilityValues,
+    getExposureValues
 );
-
