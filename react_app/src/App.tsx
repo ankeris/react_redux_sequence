@@ -5,6 +5,7 @@ import "./style.scss";
 import { valuesActions } from './@features/store/values';
 import { Person, Facility, Exposure } from '../../shared_types/types';
 import useOverlay from "./@features/hooks/overlay.hook";
+import Overlay from "./components/Overlay";
 
 interface IProps extends DispatchProp {
   isLoading: boolean,
@@ -16,12 +17,21 @@ interface IProps extends DispatchProp {
 const App: FunctionComponent<IProps> = (props) => {
   const [inputValue, setInputValue] = useState<string>('');
   const [errMsg, setErrMsg] = useState<string>('');
+  const {isShowing, toggleOverlay, setOverlayMessage, overlayMessage, setOverlayTitle, overlayTitle} = useOverlay();
   
   const getValidationMessage = (value: string): string => {
     if (value.toString().length < 1 || value.toString().length > 10) return 'Number should be up to 10 characters';
     if (!/^[a-zA-Z]+$/.test(value)) return 'Should only contain letters';  
     else return ''
   }
+
+  useEffect(() => {
+    if (!props.exposureValues) return;
+    setOverlayTitle('Overlay')
+    setOverlayMessage(`The final value is: ${props.facilityValues.val3 * props.facilityValues.val4}`)
+    // only open overlay when it's not open yet.
+    if(!isShowing) toggleOverlay()
+  }, [props.exposureValues])
 
   const onSubmit = () => {
     const errMsg = getValidationMessage(inputValue)
@@ -44,6 +54,14 @@ const App: FunctionComponent<IProps> = (props) => {
       {props.isLoading && <h5>Loading</h5>}
       {!!props.serverErrorMessage.length && <h4 className="error error--warning">{props.serverErrorMessage}</h4>}
       {!!errMsg.length && <h1>{errMsg}</h1>}
+
+      <Overlay
+        title={overlayTitle}
+        message={overlayMessage}
+        isShowing={isShowing}
+        hide={toggleOverlay}
+      />
+
     </>
   );
 }
