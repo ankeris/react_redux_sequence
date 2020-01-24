@@ -8,8 +8,8 @@ export interface ActionTypes {
     [ACTION_NAME: string]: string
 }
 
-export interface Actions<T = any> {
-    [ACTION: string]: (payload?: T) => Action<T> | any
+export interface Actions {
+    [ACTION: string]: <T = any>(payload?: T) => Action
 }
 
 /* @param T   */
