@@ -1,3 +1,4 @@
+## PLEASE RE-DO API WITH NODEJS
 ## React + Redux app that provides a solution of sequential GET requests in Redux
 
 ## To try out:
