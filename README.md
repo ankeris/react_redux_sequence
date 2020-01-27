@@ -8,6 +8,7 @@ In `mock_api` run:
 
 ```bash
     npm install
+    npm run build
     npm start
 ```
 
@@ -15,6 +16,5 @@ In `react_app` run:
 
 ```bash
     npm install
-    npm run build
     npm start
 ```
